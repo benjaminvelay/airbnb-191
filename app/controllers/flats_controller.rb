@@ -1,4 +1,5 @@
 class FlatsController < ApplicationController
+  before_action :set_flat, only: [:show, :edit, :update, :destroy]
 
   # GET /flats
   # GET /flats.json
@@ -9,7 +10,6 @@ class FlatsController < ApplicationController
   # GET /flats/1
   # GET /flats/1.json
   def show
-    @flat = Flat.find(params[:id])
   end
 
   # GET /flats/new
@@ -19,7 +19,6 @@ class FlatsController < ApplicationController
 
   # GET /flats/1/edit
   def edit
-    @flat = Flat.find(params[:id])
   end
 
   # POST /flats
@@ -41,7 +40,6 @@ class FlatsController < ApplicationController
   # PATCH/PUT /flats/1
   # PATCH/PUT /flats/1.json
   def update
-    @flat = Flat.find(params[:id])
     respond_to do |format|
       if @flat.update(flat_params)
         format.html { redirect_to @flat, notice: 'Flat was successfully updated.' }
@@ -56,7 +54,6 @@ class FlatsController < ApplicationController
   # DELETE /flats/1
   # DELETE /flats/1.json
   def destroy
-    @flat = Flat.find(params[:id])
     @flat.destroy
     respond_to do |format|
       format.html { redirect_to flats_url, notice: 'Flat was successfully destroyed.' }
@@ -65,6 +62,11 @@ class FlatsController < ApplicationController
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_flat
+      @flat = Flat.find(params[:id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def flat_params
       params.require(:flat).permit(:title, :address)
